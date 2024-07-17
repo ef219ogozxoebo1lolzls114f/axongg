@@ -3,202 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Get Axon</title>
-    <link rel="icon" type="image/x-icon" href="imagesigma.png" />
+    <title>Display My IP</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap');
-
         body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Roboto', sans-serif;
-            height: 100vh;
+            font-family: Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(45deg, #ff0000, #0000ff, #808080);
-            background-size: 400% 400%;
-            animation: gradient 15s ease infinite;
-            position: relative;
-            overflow: hidden;
-            opacity: 0;
-            transition: opacity 2s;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
         }
-
-            body.loaded {
-                opacity: 1;
-            }
-
-        @keyframes gradient {
-            0% {
-                background-position: 0% 50%;
-            }
-
-            50% {
-                background-position: 100% 50%;
-            }
-
-            100% {
-                background-position: 0% 50%;
-            }
-        }
-
-        .content {
-            position: relative;
-            z-index: 2;
+        #ip-container {
             text-align: center;
-            color: white;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-            transform: perspective(1000px);
-        }
-
-            .content h1 {
-                font-size: 3em;
-                margin: 0.2em 0;
-                letter-spacing: 2px;
-                text-transform: uppercase;
-            }
-
-        .buttons {
-            margin-top: 20px;
-        }
-
-            .buttons a {
-                text-decoration: none;
-                padding: 10px 20px;
-                margin: 0 10px;
-                color: white;
-                background: linear-gradient(45deg, #ff0000, #0000ff, #808080);
-                background-size: 400% 400%;
-                animation: button-gradient 10s ease infinite;
-                border-radius: 5px;
-                transition: transform 0.3s;
-                font-weight: bold;
-                text-transform: uppercase;
-                display: inline-block;
-            }
-
-                .buttons a:hover {
-                    transform: scale(1.1);
-                }
-
-        @keyframes button-gradient {
-            0% {
-                background-position: 0% 50%;
-            }
-
-            50% {
-                background-position: 100% 50%;
-            }
-
-            100% {
-                background-position: 0% 50%;
-            }
-        }
-
-        .parallax {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            background: radial-gradient(circle at center, rgba(255, 255, 255, 0.1), transparent);
-            background-size: 200% 200%;
-            transition: transform 0.1s;
-        }
-
-        .side-image {
-            position: absolute;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%) rotate(-15deg);
-            width: 250px;
-            height: 250px;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(255, 255, 255, 0.2);
-            transition: transform 0.5s;
-        }
-
-            .side-image img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
-
-            .side-image:hover {
-                transform: translateY(-50%) rotate(-15deg) scale(1.1);
-                box-shadow: 0 0 25px rgba(0, 0, 0, 0.7), inset 0 0 25px rgba(255, 255, 255, 0.4);
-            }
-
-        @keyframes image-move {
-            0% {
-                transform: translateY(-50%) rotateY(0deg);
-            }
-
-            100% {
-                transform: translateY(-50%) rotateY(360deg);
-            }
-        }
-
-        .ripple {
-            position: absolute;
-            border-radius: 50%;
-            transform: scale(0);
-            animation: ripple 0.6s linear;
-            background: rgba(255, 255, 255, 0.5);
-        }
-
-        @keyframes ripple {
-            to {
-                transform: scale(4);
-                opacity: 0;
-            }
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
         }
     </style>
 </head>
 <body>
-    <div class="parallax"></div>
-    <div class="content">
-        <h1>Axon</h1>
-        <h1>One Of The Best Executor Out There! Get Axon Today</h1>
-        <div class="buttons">
-            <a href="https://cdn.discordapp.com/attachments/1261365137584165025/1261367101961011281/AxonLauncher.exe?ex=6692b328&is=669161a8&hm=f822ce5061c98dbea9e1f016365a191e6b174071d92f129b056a1f530c1393f6&" class="download" class="download">Download</a>
-            <a href="https://discord.gg/nxFJstFUWB" class="discord">Discord</a>
-        </div>
+    <div id="ip-container">
+        <h1>Your IP Address is:</h1>
+        <p id="ip-address">Loading...</p>
     </div>
-
     <script>
-        window.addEventListener('load', () => {
-            document.body.classList.add('loaded');
-        });
-
-        document.addEventListener('mousemove', (e) => {
-            const parallax = document.querySelector('.parallax');
-            const content = document.querySelector('.content');
-            const sideImage = document.querySelector('.side-image');
-            const x = (e.clientX / window.innerWidth - 0.5) * 30;
-            const y = (e.clientY / window.innerHeight - 0.5) * 30;
-            parallax.style.transform = `translate(-${x}px, -${y}px)`;
-            content.style.transform = `perspective(1000px) rotateY(${x / 10}deg) rotateX(${-y / 10}deg)`;
-            sideImage.style.transform = `translateY(-50%) rotate(-15deg) rotateY(${x / 5}deg) rotateX(${y / 5}deg)`;
-        });
-
-        document.addEventListener('click', (e) => {
-            const ripple = document.createElement('div');
-            ripple.className = 'ripple';
-            document.body.appendChild(ripple);
-
-            const maxDim = Math.max(window.innerWidth, window.innerHeight);
-            ripple.style.width = ripple.style.height = `${maxDim}px`;
-            ripple.style.left = `${e.clientX - maxDim / 2}px`;
-            ripple.style.top = `${e.clientY - maxDim / 2}px`;
-
-            ripple.addEventListener('animationend', () => {
-                document.body.removeChild(ripple);
+        fetch('https://api.ipify.org?format=json')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('ip-address').innerText = data.ip;
+            })
+            .catch(error => {
+                console.error('Error fetching the IP address:', error);
+                document.getElementById('ip-address').innerText = 'Unable to retrieve IP address';
             });
-        });
     </script>
 </body>
 </html>
